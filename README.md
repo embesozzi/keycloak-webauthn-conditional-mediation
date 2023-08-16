@@ -23,7 +23,7 @@ If this authenticator gets configured as part of a browser based login flow, Key
 Here's an example of the Browser login flow:   
     <img src="docs/idp-flow-2.png" width="80%" height="80%">
 
-Here's the UX:   
+Here's the UX: passkey modal vs autofill 🥰   
     <img src="docs/passkey-autofill.png" width="80%" height="80%">
 
 ## How to install?
