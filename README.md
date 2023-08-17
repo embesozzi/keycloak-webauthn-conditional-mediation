@@ -28,7 +28,10 @@ Here's the UX: passkey modal vs autofill 🥰
 
 ## How to install?
 
-Build with ```bash mvn clean package```
+Build with:
+```bash
+mvn clean package
+```
 
 Follow the below instructions depending on your distribution and runtime environment.
 
