@@ -109,7 +109,6 @@
     <script type="text/javascript">
         const authnOptions = {
             challenge : "${challenge}",
-            userVerification : "${userVerification}",
             rpId : "${rpId}",
             createTimeout : ${createTimeout},
             isUserIdentified: ${isUserIdentified},
@@ -130,6 +129,7 @@
                     isConditionalMediationAvailable = await PublicKeyCredential.isConditionalMediationAvailable();
                 }
                 if(!authnOptions.isUserIdentified && isConditionalMediationAvailable) {
+                    console.log("Browser supports WebAuthn Conditional UI" )
                     webAuthnAuthenticate({ mediation: 'conditional'});
                 }
                 else {
@@ -180,12 +180,12 @@
 
             window.result = credential;
 
-            $("#clientDataJSON").val(encondeBase64AsUint8Array(result.response.clientDataJSON));
-            $("#authenticatorData").val(encondeBase64AsUint8Array(result.response.authenticatorData));
-            $("#signature").val(encondeBase64AsUint8Array(result.response.signature));
+            $("#clientDataJSON").val(encodeBase64AsUint8Array(result.response.clientDataJSON));
+            $("#authenticatorData").val(encodeBase64AsUint8Array(result.response.authenticatorData));
+            $("#signature").val(encodeBase64AsUint8Array(result.response.signature));
             $("#credentialId").val(result.id);
             if(result.response.userHandle) {
-                $("#userHandle").val(encondeBase64AsUint8Array(result.response.userHandle));
+                $("#userHandle").val(encodeBase64AsUint8Array(result.response.userHandle));
             }
             $("#webauth").submit();
         }
@@ -198,7 +198,7 @@
             $("#webauth").submit();
         }
 
-        const encondeBase64AsUint8Array = (value) => {
+        const encodeBase64AsUint8Array = (value) => {
             return base64url.encode(new Uint8Array(value), { pad: false });
         }
 

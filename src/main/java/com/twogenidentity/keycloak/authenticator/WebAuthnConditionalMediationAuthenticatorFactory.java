@@ -1,6 +1,5 @@
 package com.twogenidentity.keycloak.authenticator;
 
-import org.jboss.logging.Logger;
 import org.keycloak.authentication.Authenticator;
 import org.keycloak.authentication.authenticators.browser.WebAuthnAuthenticatorFactory;
 import org.keycloak.models.KeycloakSession;
@@ -9,7 +8,6 @@ import org.keycloak.models.credential.WebAuthnCredentialModel;
 public class WebAuthnConditionalMediationAuthenticatorFactory extends WebAuthnAuthenticatorFactory {
 
     public static final String PROVIDER_ID = "webauthn-conditional-authenticator";
-    private static final Logger LOG = Logger.getLogger(WebAuthnConditionalMediationAuthenticatorFactory.class);
 
     @Override
     public String getReferenceCategory() {

@@ -8,8 +8,8 @@ import org.keycloak.models.KeycloakSession;
 import org.keycloak.services.managers.AuthenticationManager;
 import org.keycloak.utils.StringUtil;
 
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.Response;
 
 public class WebAuthnConditionalMediationAuthenticator extends WebAuthnPasswordlessAuthenticator {
 

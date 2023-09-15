@@ -6,13 +6,13 @@
 
     <groupId>com.twogenidentity.keycloak</groupId>
     <artifactId>keycloak-webauthn-conditional-mediation</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <keycloak.version>21.1.1</keycloak.version>
+        <keycloak.version>22.0.3</keycloak.version>
     </properties>
 
     <dependencyManagement>
