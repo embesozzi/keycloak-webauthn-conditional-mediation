@@ -23,8 +23,17 @@ If this authenticator gets configured as part of a browser based login flow, Key
 Here's an example of the Browser login flow:   
     <img src="docs/idp-flow-2.png" width="80%" height="80%">
 
-Here's the UX: passkey modal vs autofill 🥰   
-    <img src="docs/passkey-autofill.png" width="80%" height="80%">
+Here's the default  user experience when trying to login with Passkeys, which is a dialog that pops up. In some cases the UX is not good.
+- Default user experience with Passkeys   
+<img src="docs/default-passkey.png" width="40%" height="40%">
+
+By using the feature called conditional UI (a part of the WebAuthn standard), you can enhance the UX. You can include passkeys in autofill suggestions.
+- Improved Passkeys with suggestions   
+<img src="docs/autofill-passkey.png" width="80%" height="60%">
+
+> **Considerations**:   
+> Check out the [Passkeys Browser Autofill UI Device Support link](https://passkeys.dev/device-support/). So far, Ubuntu doesnt not support Passkey Autofill UI.   
+>   
 
 ## How to install?
 
