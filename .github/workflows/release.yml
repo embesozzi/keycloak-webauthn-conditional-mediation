@@ -21,10 +21,6 @@ jobs:
         distribution: 'temurin'
         java-version: 17
 
-    - name: Get jar version
-      id: get_version
-      run: echo "::set-output name=version::$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)"
-      
     - name: Get jar name
       id: get_name
       run: echo "::set-output name=name::$(mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout)"
