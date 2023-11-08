@@ -9,7 +9,7 @@ jobs:
   build-upload-release:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Get version from tag
       id: version
@@ -39,26 +39,25 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         exclude_types: other,doc,chore
         config_file: .github/tag-changelog-config.js        
-
-    - name: Parse changelog markdown to HTML
-      id: changelog-html
-      uses: lifepal/markdown-to-html@v1.2
-      with:
-        text: ${{ steps.changelog.outputs.changelog }}
     
-    - name: Release to GitHub releases
-      uses: softprops/action-gh-release@v1
-      with:
-        body: ${{ steps.changelog.outputs.changes }}
-        fail_on_unmatched_files: true
-        tag_name: ${{ steps.version.outputs.number }}
+     - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.version.outputs.number }}
+          release_name: ${{ steps.version.outputs.number }}
+          body: ${{ steps.changelog.outputs.changes }}
+          draft: false
+          prerelease: false
 
-    - name: Upload JAR to release
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./target/${{ steps.get_name.outputs.name }}-${{ steps.get_version.outputs.version }}.jar
-        asset_name: ${{ steps.get_name.outputs.name }}-${{ steps.get_version.outputs.version }}.jar
-        asset_content_type: application/java-archive
+      - name: Upload JAR to release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./target/${{ steps.get_name.outputs.name }}-${{ steps.get_version.outputs.version }}.jar
+          asset_name: ${{ steps.get_name.outputs.name }}-${{ steps.get_version.outputs.version }}.jar
+          asset_content_type: application/java-archive
