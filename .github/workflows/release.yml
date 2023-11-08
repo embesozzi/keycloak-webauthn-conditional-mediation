@@ -1,0 +1,64 @@
+name: Release
+
+on:
+  push:
+    tags:
+       - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  build-upload-release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Get version from tag
+      id: version
+      run: echo ::set-output name=number::$(echo $GITHUB_REF | cut -d / -f 3 | cut -d / -f 3 | sed -e 's/^v//') 
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: 17
+
+    - name: Get jar version
+      id: get_version
+      run: echo "::set-output name=version::$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)"
+      
+    - name: Get jar name
+      id: get_name
+      run: echo "::set-output name=name::$(mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout)"
+
+    - name: Build with maven
+      run: mvn clean package
+    
+    - name: Create changelog text
+      id: changelog
+      uses: loopwerk/tag-changelog@v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        exclude_types: other,doc,chore
+        config_file: .github/tag-changelog-config.js        
+
+    - name: Parse changelog markdown to HTML
+      id: changelog-html
+      uses: lifepal/markdown-to-html@v1.2
+      with:
+        text: ${{ steps.changelog.outputs.changelog }}
+    
+    - name: Release to GitHub releases
+      uses: softprops/action-gh-release@v1
+      with:
+        body: ${{ steps.changelog.outputs.changes }}
+        fail_on_unmatched_files: true
+        tag_name: ${{ steps.version.outputs.number }}
+
+    - name: Upload JAR to release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./target/${{ steps.get_name.outputs.name }}-${{ steps.get_version.outputs.version }}.jar
+          asset_name: ${{ steps.get_name.outputs.name }}-${{ steps.get_version.outputs.version }}.jar
+          asset_content_type: application/java-archive
