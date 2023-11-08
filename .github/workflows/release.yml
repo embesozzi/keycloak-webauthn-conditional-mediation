@@ -40,24 +40,24 @@ jobs:
         exclude_types: other,doc,chore
         config_file: .github/tag-changelog-config.js        
     
-     - name: Create release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.version.outputs.number }}
-          release_name: ${{ steps.version.outputs.number }}
-          body: ${{ steps.changelog.outputs.changes }}
-          draft: false
-          prerelease: false
+    - name: Create release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.version.outputs.number }}
+        release_name: ${{ steps.version.outputs.number }}
+        body: ${{ steps.changelog.outputs.changes }}
+        draft: false
+        prerelease: false
 
-      - name: Upload JAR to release
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./target/${{ steps.get_name.outputs.name }}-${{ steps.get_version.outputs.version }}.jar
-          asset_name: ${{ steps.get_name.outputs.name }}-${{ steps.get_version.outputs.version }}.jar
-          asset_content_type: application/java-archive
+    - name: Upload JAR to release
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./target/${{ steps.get_name.outputs.name }}-${{ steps.get_version.outputs.version }}.jar
+        asset_name: ${{ steps.get_name.outputs.name }}-${{ steps.get_version.outputs.version }}.jar
+        asset_content_type: application/java-archive
