@@ -1,5 +1,7 @@
 package com.twogenidentity.keycloak.authenticator;
 
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.Response;
 import org.jboss.logging.Logger;
 import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.authentication.authenticators.browser.UsernameForm;
@@ -7,9 +9,6 @@ import org.keycloak.authentication.authenticators.browser.WebAuthnPasswordlessAu
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.services.managers.AuthenticationManager;
 import org.keycloak.utils.StringUtil;
-
-import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.Response;
 
 public class WebAuthnConditionalMediationAuthenticator extends WebAuthnPasswordlessAuthenticator {
 

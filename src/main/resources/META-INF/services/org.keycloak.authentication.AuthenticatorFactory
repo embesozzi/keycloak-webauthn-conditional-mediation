@@ -1,1 +1,2 @@
 com.twogenidentity.keycloak.authenticator.WebAuthnConditionalMediationAuthenticatorFactory
+com.twogenidentity.keycloak.authenticator.WebAuthnConditionalEnrollmentAuthenticatorFactory
